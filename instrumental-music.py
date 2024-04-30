@@ -7,10 +7,11 @@ from PIL import Image
 from streamlit_option_menu import option_menu
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
 
+from sample_utils.turn import get_ice_servers
 
 
 
-model = tf.keras.models.load_model('modelo.h5')
+model = tf.keras.models.load_model('models/modelo.h5')
 
 # Etiquetas de las clases
 class_names = ['Piano', 'Violin', 'Bateria', 'Congas', 'Trompeta', 'Cajon', 'Armonicas', 'Acordeon', 'Guitarra Electrica', 'Guitarra Acustica']
@@ -61,35 +62,42 @@ def stream_predict(frame: av.VideoFrame) -> av.VideoFrame:
     return av.VideoFrame.from_ndarray(image, format="bgr24")
 
 
+def main():
+    st.title("Clasificación de Instrumentos musicales")
 
-st.title("Clasificación de Instrumentos musicales")
-
-selected = option_menu( 
-    menu_title=None,
-    options = ["video en vivo","Cargar imagen"],
-    orientation="horizontal",
-)
-
-
-if selected == "video en vivo":
-    st.write("video en vivo")
-
-    webrtc_ctx = webrtc_streamer(
-        key="object-detection", 
-        media_stream_constraints={"video": True, "audio": False},
-        video_frame_callback=stream_predict,
-        mode=WebRtcMode.SENDRECV,
-        async_processing=True,
+    selected = option_menu( 
+        menu_title=None,
+        options = ["video en vivo","Cargar imagen"],
+        orientation="horizontal",
     )
 
-if selected == "Cargar imagen":
-    uploaded_image = st.file_uploader("Cargar una imagen", type=["jpg", "jpeg", "png"])
 
-    if uploaded_image is not None:
-        if st.button('clasificar'):
-        # Obtener la predicción
-            predicted_class, confidence_percentage = predict_image(uploaded_image)
+    if selected == "video en vivo":
+        st.write("video en vivo")
 
-        # Mostrar el resultado
-            st.subheader(f"Predicción: {predicted_class}")
-            st.subheader(f"Confianza: {confidence_percentage:.2f}%")
+        webrtc_ctx = webrtc_streamer(
+            key="object-detection", 
+            media_stream_constraints={"video": True, "audio": False},
+            video_frame_callback=stream_predict,
+            mode=WebRtcMode.SENDRECV,
+            async_processing=True,
+            rtc_configuration={
+                "iceServers": get_ice_servers(),
+                "iceTransportPolicy": "relay",
+            },
+        )
+
+    if selected == "Cargar imagen":
+        uploaded_image = st.file_uploader("Cargar una imagen", type=["jpg", "jpeg", "png"])
+
+        if uploaded_image is not None:
+            if st.button('clasificar'):
+            # Obtener la predicción
+                predicted_class, confidence_percentage = predict_image(uploaded_image)
+
+            # Mostrar el resultado
+                st.subheader(f"Predicción: {predicted_class}")
+                st.subheader(f"Confianza: {confidence_percentage:.2f}%")
+
+if __name__ == "__main__":
+    main()
