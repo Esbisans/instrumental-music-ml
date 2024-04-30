@@ -1,0 +1,6 @@
+opencv-python-headless
+numpy
+tensorflow
+streamlit-option-menu
+streamlit-webrtc
+twilio~=8.10.1
