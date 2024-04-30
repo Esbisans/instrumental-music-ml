@@ -43,7 +43,7 @@ def stream_predict(frame: av.VideoFrame) -> av.VideoFrame:
     image = frame.to_ndarray(format="bgr24")
 
     im = Image.fromarray(image, 'RGB')
-    im = im.resize((224, 224))
+    im = im.resize((150, 150))
     img_array = np.array(im)
     img_array = np.expand_dims(img_array, 0)
 
