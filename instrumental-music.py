@@ -55,9 +55,9 @@ def stream_predict(frame: av.VideoFrame) -> av.VideoFrame:
     predicted_class = class_names[predicted_class_index]
     confidence_percentage = predictions_single[0][predicted_class_index] * 100
 
-    print(predicted_class, confidence_percentage)
+    #print(predicted_class, confidence_percentage)
     cv2.putText(image, f"{predicted_class}, {confidence_percentage:.2f}%", (50, 50),
-            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 190, 51), 2)
+            cv2.FONT_HERSHEY_SIMPLEX, 1, (200, 100, 10), 2)
 
     return av.VideoFrame.from_ndarray(image, format="bgr24")
 
