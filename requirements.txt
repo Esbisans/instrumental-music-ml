@@ -2,5 +2,5 @@ opencv-python-headless
 numpy
 tensorflow
 streamlit-option-menu
-streamlit-webrtc
+streamlit-webrtc~=0.47.6
 twilio~=8.10.1
