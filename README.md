@@ -1,6 +1,6 @@
 # Musical Instrument Classifier
 
-This project is an academic endeavor aimed at developing a musical instrument classifier using machine learning techniques. This app is the implementation of the model that has already been trained.
+This project is an academic endeavor aimed at developing a musical instrument classifier using machine learning techniques. This app is the implementation of the model that has already been trained. This app is developed in the **Spanish** language.
 
 
 ## Overview
@@ -18,7 +18,7 @@ The labels are in Spanish, there are 10 classes.
 | Spanish | English |
 |----------|----------|
 | Acordeón               | Accordion             |
-| Armónica               | Harmonica             |
+| Armónicas              | Harmonica             |
 | Batería                | Drums                 |
 | Cajón                  | Cajón (or Box Drum)   |
 | Congas                 | Congas                |
