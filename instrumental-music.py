@@ -2,7 +2,7 @@ import cv2
 import av
 import numpy as np
 import streamlit as st
-import tensorflow as tf
+import tensorflow-text-nightly as tf
 from PIL import Image
 from streamlit_option_menu import option_menu
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
